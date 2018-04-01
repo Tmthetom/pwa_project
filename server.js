@@ -15,7 +15,7 @@ app.use('/style', express.static(__dirname + '/style'));
 
 // definice globálních proměnných
 var usernames = {};
-var rooms = ['room1','room2','room3'];
+var rooms = ['General','School','Work'];
 
 // všechny eventy
 io.sockets.on('connection', function (socket) {
@@ -25,19 +25,19 @@ io.sockets.on('connection', function (socket) {
 		// jméno z promptu
 		socket.username = username;
 		// defaultní místnost
-		socket.room = 'room1';
+		socket.room = rooms[0];
 		// uloží se do globálního listu uživatelů
 		usernames[username] = socket.room;
 		// socket se připojí do defaultní místnosti
-		socket.join('room1');	
+		socket.join(rooms[0]);	
 		// uložíme informaci na klientovi
 		socket.emit('setCurrentRoom', socket.room);
 		// zpráva do chatu, že došlo k připojení (jen pro uživatele)
-		socket.emit('updateChat', 'SERVER', 'you have connected to' + socket.room);
+		socket.emit('updateChat', 'SERVER', 'You have connected to ' + socket.room);
 		// zpráva všem uživatelům v roomu1, že došlo k připojení
 		socket.broadcast.to(socket.room).emit('updateChat', 'SERVER', username + ' has connected to this room');
 		// aktualizace odkazů na roomy na klientovi
-		socket.emit('updateRooms', rooms, 'room1');
+		socket.emit('updateRooms', rooms, rooms[0]);
 		// aktualizace seznamu uživatelů - všichni uživatelé, provede se jen pro ty v současném roomu
 		io.sockets.emit('updateUsers', usernames, socket.room);		
 	});
@@ -61,7 +61,7 @@ io.sockets.on('connection', function (socket) {
 		// aktualizace seznamu uživatelů v starém roomu
 		io.sockets.emit('updateUsers', usernames, socket.room);	
 		// zpráva do chatu, že došlo k připojení (jen pro uživatele)
-		socket.emit('updateChat', 'SERVER', 'you have connected to '+ newroom);	
+		socket.emit('updateChat', 'SERVER', 'You have connected to '+ newroom);	
 		// zpráva všem uživatelům v starém roomu, že se odpojil uživatel
 		socket.broadcast.to(socket.room).emit('updateChat', 'SERVER', socket.username+' has left this room');
 		// uložíme proměnnou
