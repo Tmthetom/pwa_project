@@ -63,29 +63,21 @@ body {
 	padding: 20px;
 }
 #messageField {
-	width: 90%;
-	padding-bottom: 5px;
-	padding-top: 5px;
-	margin-left: auto;
-	margin-right: auto;
-	display: block;
-	margin-bottom: 20px;
+	width: 86%;
+	padding-top: 7px;
+	padding-bottom: 7px;
 	border-radius: 4px;
-	background-color: rgba(255,255,255,0.26);
 	border-style: groove;
 	text-align: center;
 	text-shadow: 0px 0px;
 	color: rgba(95,95,95,1.00);
-	font-weight: normal;
 }
 #messageSend {
-	width: 90%;
-	margin-left: auto;
-	margin-right: auto;
-	display: block;
+	float: right;
+	width: 10%;
+	padding-top: 8px;
 	padding-bottom: 8px;
 	border-radius: 4px;
-	padding-top: 8px;
 	border-style: groove;
 	background-color: rgba(92,100,232,0.55);
 	color: rgba(255,255,255,1.00);
