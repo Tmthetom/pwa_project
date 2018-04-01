@@ -47,7 +47,7 @@ body {
 
 /* Rooms */
 
-#roomName {
+#rooms {
 	text-align: center;
 }
 
@@ -55,6 +55,6 @@ body {
 
 /* Users */
 
-#userName {
+#roomUsers {
 	text-align: center;
 }
