@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-  <title>chat test</title>
+  <title>Internet chatting application</title>
+  <link rel="stylesheet" type="text/css" href="style/style.css">
   <script type="text/javascript" src="/socket.io/socket.io.js"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
   <script type="text/javascript" src="/scripts/frontend.js"></script>
 </head>
-
 <body>
-<div style="float:left;width:100px;border-right:1px solid black;height:300px;padding:10px;overflow-y:scroll;">
-	<b>ROOMS</b>
-	<div id="rooms"></div>
-</div>
-<div style="float:left;width:300px;height:250px;overflow-y:scroll;padding:10px;">
-	<div id="conversation"></div>
-	<input id="data" style="width:200px;" />
-	<input type="button" id="dataSend" value="send" />
-</div>
-<div style="float:left;width:100px;border-left:1px solid black;height:300px;padding:10px;overflow-y:scroll;">
-	<b>USER LIST</b>
-	<div id="roomUsers"></div>
-</div>
+	<!-- List of rooms -->
+	<div id="roomTab">
+		<div class="headline">Rooms</div>
+		<div id="rooms"></div>
+	</div>
+	
+	<!-- Chat window -->
+	<div id="conversationTab">
+		<div id="conversation"></div>
+		<input id="data" style="width:200px;" />
+		<input type="button" id="dataSend" value="send" />
+	</div>
+	
+	<!-- List of users -->
+	<div id="userTab">
+		<div class="headline">All users</div>
+		<div id="roomUsers"></div>
+	</div>
 </body>
 </html>
