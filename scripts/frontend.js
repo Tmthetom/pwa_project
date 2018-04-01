@@ -52,12 +52,12 @@
 	// funkce tlačítka Send
 	$(function(){
 		$('#messageSend').click( function() {
-			var message = $('#message').val();
-			$('#message').val('');
+			var message = $('#messageField').val();
+			$('#messageField').val('');
 			socket.emit('sendChat', message);
 		});
 
-		$('#message').keypress(function(e) {
+		$('#messageField').keypress(function(e) {
 			if(e.which == 13) {
 				$(this).blur();
 				$('#messageSend').focus().click();
