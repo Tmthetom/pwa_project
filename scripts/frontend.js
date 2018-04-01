@@ -41,9 +41,10 @@ socket.on('updateUsers', function(users, current_room) {
 		if(value == current_room){
 			$('#users').append('<div class="userName">' + key + '</div>');
 		}
-	});};
+	});
 	
 	// refresh všech uživatelů
+	$("#usersAll").empty();
 	$.each(users, function (key, value) {
 		$('#usersAll').append('<div class="userName">' + key + '</div>');
 	});};
