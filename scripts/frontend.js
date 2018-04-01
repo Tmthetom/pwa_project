@@ -24,7 +24,7 @@
 		$('#rooms').empty();
 		$.each(rooms, function(key, value) {
 			if(value == current_room){
-				$('#rooms').append('<div class="roomName">' + value + '</div>');
+				$('#rooms').append('<div class="roomName" id="currentRoom">' + value + '</div>');
 			}
 			else {
 				$('#rooms').append('<div class="roomName"><a href="#" onclick="switchRoom(\''+value+'\')">' + value + '</a></div>');
