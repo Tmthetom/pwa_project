@@ -12,8 +12,9 @@ body {
 /* List of rooms */
 #roomTab {
 	float: left;
-	width: 100px;
+	width: 15%;
 	height: 100%;
+	flex: 0 0 25%;
 	border-right: 1px solid rgba(0, 0, 0, .10);
 	padding: 10px;
 }
@@ -21,7 +22,7 @@ body {
 /* Chat window */
 #conversationTab {
 	float: left;
-	width: 300px;
+	width: 70%;
 	height: 100%;
 	padding: 10px;
 }
@@ -29,7 +30,7 @@ body {
 /* List of users */
 #userTab {
 	float: left;
-	width: 100px;
+	width: 15%;
 	height: 100%;
 	border-left: 1px solid rgba(0, 0, 0, .10);
 	padding:10px;
