@@ -27,7 +27,7 @@ socket.on('updateRooms', function(rooms, current_room) {
 			$('#rooms').append('<div class="roomName" id="currentRoom">' + value + '</div>');
 		}
 		else {
-			$('#rooms').append('<div class="roomName"><a href="#" onclick="switchRoom(\''+value+'\')">' + value + '</a></div>');
+			$('#rooms').append('<div class="roomName"><a href="#" onclick="switchRoom(\''+value+'\');setFocusToMessageBox()">' + value + '</a></div>');
 		}
 	});
 });
