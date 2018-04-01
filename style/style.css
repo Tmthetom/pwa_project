@@ -1,4 +1,4 @@
-.roomTab {  /* List of rooms */
+.roomTab {
     float: left;
     width: 100px;
 	border-right: 1px solid black;
@@ -7,7 +7,6 @@
 	overflow-y: scroll;
 }
 
-/* Chat window */
 .conversationTab {
     float: left;
 	width: 300px;
@@ -16,7 +15,6 @@
 	padding: 10px;
 }
 
-/* List of users */
 .userTab {
     float: left;
 	width: 100px;
