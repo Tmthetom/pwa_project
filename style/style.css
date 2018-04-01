@@ -49,12 +49,18 @@ body {
 
 .roomName {
 	text-align: center;
+	padding: 10px 0 10px 0;
 }
 #currentRoom{
 	font-weight: bold;
 }
 
 /* Conversation */
+
+#messageInput {
+	border-top: 1px solid rgba(0, 0, 0, .10);
+	padding: 20px;
+}
 
 /* Users */
 

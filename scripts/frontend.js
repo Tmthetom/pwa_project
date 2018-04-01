@@ -51,16 +51,16 @@
 	
 	// funkce tlačítka Send
 	$(function(){
-		$('#dataSend').click( function() {
-			var message = $('#data').val();
-			$('#data').val('');
+		$('#messageSend').click( function() {
+			var message = $('#message').val();
+			$('#message').val('');
 			socket.emit('sendChat', message);
 		});
 
-		$('#data').keypress(function(e) {
+		$('#message').keypress(function(e) {
 			if(e.which == 13) {
 				$(this).blur();
-				$('#dataSend').focus().click();
+				$('#messageSend').focus().click();
 			}
 		});
 	});
