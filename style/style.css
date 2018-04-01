@@ -4,31 +4,33 @@ body {
 
 /* Container for app */
 #wrapper {
-	
+	position: absolute;
+	width: 100%;
+	height: 100%;
 }
 
 /* List of rooms */
 #roomTab {
-    float: left;
-    width: 100px;
+	float: left;
+	width: 100px;
+	height: 100%;
 	border-right: 1px solid rgba(0, 0, 0, .10);
-	height: 300px;
 	padding: 10px;
 }
 
 /* Chat window */
 #conversationTab {
-    float: left;
+	float: left;
 	width: 300px;
-	height: 250px;
+	height: 100%;
 	padding: 10px;
 }
 
 /* List of users */
 #userTab {
-    float: left;
+	float: left;
 	width: 100px;
+	height: 100%;
 	border-left: 1px solid rgba(0, 0, 0, .10);
-	height: 300px;
 	padding:10px;
 }
