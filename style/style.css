@@ -39,6 +39,7 @@ body {
 .content {
 	padding: 20px;
 	overflow: auto;
+	height: 100%;
 }
 .headline {
 	height: 50px;
@@ -59,7 +60,9 @@ body {
 }
 
 /* Conversation */
-
+#conversation {
+	height: 70%;
+}
 #messageInput {  /* Div around message box and button */
 	border-top: 1px solid rgba(0, 0, 0, .10);
 	padding: 20px;
