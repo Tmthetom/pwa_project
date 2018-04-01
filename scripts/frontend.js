@@ -1,4 +1,4 @@
-	var socket = io.connect('https://multiroomchattmthetom.herokuapp.com/');
+	var socket = io.connect('https://pwa-moravec.herokuapp.com/');
 	var room = 'default';
 	
 	// pro účely refreshe userlistu
