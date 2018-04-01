@@ -35,7 +35,7 @@ body {
 	border-bottom: 1px solid rgba(0, 0, 0, .10);
 }
 .content {
-	
+	padding: 20px;
 }
 .headline {
 	height: 50px;
@@ -45,3 +45,16 @@ body {
 	text-align: center;
 }
 
+/* Rooms */
+
+#roomName {
+	text-align: center;
+}
+
+/* Conversation */
+
+/* Users */
+
+#userName {
+	text-align: center;
+}
