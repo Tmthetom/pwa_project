@@ -10,24 +10,49 @@
 <body>
 	<!-- Container for app -->
 	<div id="wrapper">
-	
+
 		<!-- List of rooms -->
-		<div id="roomTab">
-			<div class="headline">Rooms</div>
-			<div id="rooms"></div>
+		<div id="roomTab" class="tab">
+
+			<!-- Header -->
+			<div class="header">
+				<div class="headline">Rooms</div>
+			</div>
+			
+			<!-- Content -->
+			<div class="content">
+				<div id="rooms"></div>
+			</div>
 		</div>
 		
 		<!-- Chat window -->
-		<div id="conversationTab">
-			<div id="conversation"></div>
-			<input id="data" style="width:200px;" />
-			<input type="button" id="dataSend" value="send" />
+		<div id="conversationTab" class="tab">
+		
+			<!-- Header -->
+			<div class="header">
+				<div class="headline">Conversation</div>
+			</div>
+			
+			<!-- Content -->
+			<div class="content">
+				<div id="conversation"></div>
+				<input id="data" style="width:200px;" />
+				<input type="button" id="dataSend" value="send" />
+			</div>
 		</div>
 		
 		<!-- List of users -->
-		<div id="userTab">
-			<div class="headline">All users</div>
-			<div id="roomUsers"></div>
+		<div id="userTab" class="tab">
+		
+			<!-- Header -->
+			<div class="header">
+				<div class="headline">All users</div>
+			</div>
+			
+			<!-- Content -->
+			<div class="content">
+				<div id="roomUsers"></div>
+			</div>	
 		</div>
 	</div>
 </body>
