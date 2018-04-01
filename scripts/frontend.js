@@ -27,7 +27,7 @@
 				$('#rooms').append('<div class="roomName">' + value + '</div>');
 			}
 			else {
-				$('#rooms').append('<div><a href="#" onclick="switchRoom(\''+value+'\')">' + value + '</a></div>');
+				$('#rooms').append('<div class="roomName"><a href="#" onclick="switchRoom(\''+value+'\')">' + value + '</a></div>');
 			}
 		});
 	});
