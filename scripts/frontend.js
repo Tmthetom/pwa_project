@@ -24,7 +24,7 @@
 		$('#rooms').empty();
 		$.each(rooms, function(key, value) {
 			if(value == current_room){
-				$('#rooms').append('<div>' + value + '</div>');
+				$('#rooms').append('<div class="roomName">' + value + '</div>');
 			}
 			else {
 				$('#rooms').append('<div><a href="#" onclick="switchRoom(\''+value+'\')">' + value + '</a></div>');
@@ -36,10 +36,10 @@
 	socket.on('updateUsers', function(users, current_room) {
 		// když jsem ve stejném roomu, kde se provedla změna, provede se refresh
 		if(current_room.valueOf() == room.valueOf()){
-        $("#roomUsers").empty();
+        $("#users").empty();
         $.each(users, function (key, value) {
 		if(value == current_room){
-         $('#roomUsers').append('<div>' + key + '</div>');
+         $('#users').append('<div class="userName">' + key + '</div>');
 		 }
         });};
     });

@@ -25,7 +25,7 @@ body {
 	width: 70%;
 }
 #userTab {  /* List of users */
-	width: 14.9%;
+	width: 14.8%;
 	border-left: 1px solid rgba(0, 0, 0, .10);
 }
 
@@ -47,7 +47,7 @@ body {
 
 /* Rooms */
 
-#rooms {
+.roomName {
 	text-align: center;
 }
 
@@ -55,6 +55,6 @@ body {
 
 /* Users */
 
-#roomUsers {
+.userName {
 	text-align: center;
 }
