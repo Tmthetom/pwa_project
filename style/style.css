@@ -1,5 +1,4 @@
-/* List of rooms */
-.roomTab {
+.roomTab {  /* List of rooms */
     float: left;
     width: 100px;
 	border-right: 1px solid black;
