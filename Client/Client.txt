@@ -1,1 +1,0 @@
-Client is not implemented yet
