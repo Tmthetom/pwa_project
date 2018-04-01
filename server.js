@@ -11,6 +11,7 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 app.use('/scripts', express.static(__dirname + '/scripts'));
+app.use('/style', express.static(__dirname + '/style'));
 
 // definice globálních proměnných
 var usernames = {};
