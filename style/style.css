@@ -22,10 +22,10 @@ body {
 	border-right: 1px solid rgba(0, 0, 0, .10);
 }
 #conversationTab {  /* Chat window */
-	width: 62%;
+	width: 70%;
 }
 #userTab {  /* List of users */
-	width: 15%;
+	width: 14.9%;
 	border-left: 1px solid rgba(0, 0, 0, .10);
 }
 
