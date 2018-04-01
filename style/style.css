@@ -22,7 +22,7 @@ body {
 /* Chat window */
 #conversationTab {
 	float: left;
-	width: 70%;
+	width: 65%;
 	height: 100%;
 	padding: 10px;
 }
@@ -30,7 +30,6 @@ body {
 /* List of users */
 #userTab {
 	float: left;
-	width: 15%;
 	height: 100%;
 	border-left: 1px solid rgba(0, 0, 0, .10);
 	padding:10px;
