@@ -2,6 +2,7 @@
 /* Containers for app */
 
 body {
+	font-family: 'Open Sans', sans-serif;
 	margin: 0px;
 }
 #wrapper {
@@ -15,7 +16,6 @@ body {
 .tab {  /* Common setting */
 	float: left;
 	height: 100%;
-	padding: 10px;
 }
 #roomTab {  /* List of rooms */
 	width: 15%;
@@ -32,7 +32,7 @@ body {
 /* Inner tab */
 
 .header {
-	
+	border-bottom: 1px solid rgba(0, 0, 0, .10);
 }
 .content {
 	
@@ -41,7 +41,7 @@ body {
 	height: 50px;
 	line-height: 50px;
 	font-size: 16px;
-	font-weight: 500;
+	font-weight: 800;
 	text-align: center;
 }
 
