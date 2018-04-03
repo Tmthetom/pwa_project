@@ -17,6 +17,7 @@ socket.on('updateChat', function (username, data) {
 	// čas + jméno + zpráva
 	$('#conversation').append(("0" + time.getHours()).slice(-2) + ":" + ("0" + time.getMinutes()).slice(-2) +
 	' - <b>'+username + ':</b> ' + data + '<br>');
+	updateScroll();
 });
 
 // odkazy pro přepínání mezi roomy
@@ -74,4 +75,10 @@ $(function(){
 // přepínání mezi roomy na serveru
 function setFocusToMessageBox(){
 	document.getElementById("messageField").focus();
+}
+
+// posunutí scrollu chatovacího okna k nové zprávě
+function updateScroll(){
+    var element = document.getElementById("conversation");
+    element.scrollTop = element.scrollHeight;
 }
