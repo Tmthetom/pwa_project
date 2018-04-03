@@ -23,7 +23,7 @@ body {
 	border-right: 1px solid rgba(0, 0, 0, .10);
 }
 #conversationTab {  /* Chat window */
-	width: 70%;
+	max-height: 70%;
 }
 #userTab {  /* List of users */
 	width: 14.8%;
@@ -39,7 +39,6 @@ body {
 .content {
 	padding: 20px;
 	overflow: auto;
-	height: 100%;
 }
 .headline {
 	height: 50px;
@@ -66,9 +65,11 @@ body {
 #messageInput {  /* Div around message box and button */
 	border-top: 1px solid rgba(0, 0, 0, .10);
 	padding: 20px;
+	/*
 	position: fixed;
 	bottom: 0;
 	width: 66.8%;
+	*/
 }
 #messageField {  /* Message box */
 	width: 86%;
