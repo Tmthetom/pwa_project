@@ -23,7 +23,7 @@ body {
 	border-right: 1px solid rgba(0, 0, 0, .10);
 }
 #conversationTab {  /* Chat window */
-	max-height: 70%;
+	width: 70%;
 }
 #userTab {  /* List of users */
 	width: 14.8%;
@@ -60,7 +60,7 @@ body {
 
 /* Conversation */
 #conversation {
-	height: 70%;
+	max-height: 70%;
 }
 #messageInput {  /* Div around message box and button */
 	border-top: 1px solid rgba(0, 0, 0, .10);
