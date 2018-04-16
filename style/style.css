@@ -61,7 +61,7 @@ body {
 /* Inner tab */
 
 .header {
-	border-bottom: 1px solid rgba(0, 0, 0, .10);
+	border-bottom: 10px solid rgba(0, 0, 0, .10);
 	background-color: #b89dff;
 }
 .content {
@@ -105,7 +105,7 @@ body {
 /* Conversation */
 
 #conversation {  /* Communication window */
-	height: calc(100% - 170px);
+	height: calc(100% - 175px);
 }
 #messageInput {  /* Div around message box and button */
 	border-top: 1px solid rgba(0, 0, 0, .10);
