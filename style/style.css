@@ -10,8 +10,6 @@ body {
 	position: absolute;
 	width: 100%;
 	height: 100%;
-	/*-webkit-filter: blur(7px);*/
-    filter: blur(7px);
 }
 
 /* Tabs */
@@ -108,7 +106,7 @@ body {
 /* Lock (when not logged in) */
 
 #lockForm {
-	display: block;
+	display: none;
 	position: absolute;
 	z-index: 100;
 	height: auto;
