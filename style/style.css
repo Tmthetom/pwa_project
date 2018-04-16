@@ -78,12 +78,21 @@ body {
 
 /* Rooms */
 
-.roomName {
+#rooms {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+.roomName a {
 	text-align: center;
+	text-decoration: none;
 	padding: 10px 0 10px 0;
+}
+.roomName a:hover {
+	background-color: #b89dff;
 }
 #currentRoom{
 	font-weight: bold;
+	background-color: #ebe3ff;
 }
 
 /* Conversation */
