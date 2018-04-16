@@ -24,7 +24,11 @@ on('connection', socketioJwt.authorize({
     timeout: 15000
   })).on('authenticated', function(socket) {
     //socket je autorizovaný, můžeme pokračovat
-			socket.username = socket.decoded_token.name;
+	
+		// aktualizace stránky
+		location.reload();
+		// načtení uživatelského jména
+		socket.username = socket.decoded_token.name;
 		// defaultní místnost
 		socket.room = rooms[0];
 		// uloží se do globálního listu uživatelů
