@@ -2,7 +2,8 @@
 var express = require('express'),
     app = express(),
     server = require('http').createServer(app),
-    io = require('socket.io').listen(server);
+    io = require('socket.io').listen(server),
+	socketioJwt = require('socketio-jwt');
 
 server.listen(process.env.PORT || 8080);
 
@@ -17,17 +18,17 @@ app.use('/style', express.static(__dirname + '/style'));
 var usernames = {};
 var rooms = ['General','School','Work'];
 
-// všechny eventy
-io.sockets.on('connection', function (socket) {
-	
-	// přidání uživatele, volá se z frontendu
-	socket.on('addUser', function(username){
-		// jméno z promptu
-		socket.username = username;
+io.sockets.
+on('connection', socketioJwt.authorize({
+    secret: 'yeMuI7XLMwwYAhzCtgrGqBLjg9rI5-jpHHs-zCiSfO-O3wFBHHUR12N8z9yCDqvN', //tajný klíč
+    timeout: 15000
+  })).on('authenticated', function(socket) {
+    //socket je autorizovaný, můžeme pokračovat
+			socket.username = socket.decoded_token.nickname;
 		// defaultní místnost
 		socket.room = rooms[0];
 		// uloží se do globálního listu uživatelů
-		usernames[username] = socket.room;
+		usernames[socket.decoded_token.nickname] = socket.room;
 		// socket se připojí do defaultní místnosti
 		socket.join(rooms[0]);	
 		// uložíme informaci na klientovi
@@ -35,13 +36,13 @@ io.sockets.on('connection', function (socket) {
 		// zpráva do chatu, že došlo k připojení (jen pro uživatele)
 		socket.emit('updateChat', 'SERVER', 'You have connected to ' + socket.room);
 		// zpráva všem uživatelům v roomu1, že došlo k připojení
-		socket.broadcast.to(socket.room).emit('updateChat', 'SERVER', username + ' has connected to this room');
+		socket.broadcast.to(socket.room).emit('updateChat', 'SERVER', socket.decoded_token.nickname + ' has connected to this room');
 		// aktualizace odkazů na roomy na klientovi
 		socket.emit('updateRooms', rooms, rooms[0]);
 		// aktualizace seznamu uživatelů - všichni uživatelé, provede se jen pro ty v současném roomu
 		io.sockets.emit('updateUsers', usernames, socket.room);		
-	});
-	
+
+
 	// posílání chatových zpráv, zpráva se pošle na sockety v současném roomu
 	socket.on('sendChat', function (data) {
 		io.sockets.in(socket.room).emit('updateChat', socket.username, data);
@@ -85,4 +86,5 @@ io.sockets.on('connection', function (socket) {
 		//odpojení socketu z roomu
 		socket.leave(socket.room);
 	});
-});
+
+  });

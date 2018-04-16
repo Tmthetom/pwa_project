@@ -1,14 +1,87 @@
 var socket = io.connect('https://pwa-moravec.herokuapp.com/');
 var room = 'default';
+var lock = null;
+var userToken = localStorage.getItem('userToken');
+var accessToken = localStorage.getItem('accessToken');
+
+$(document).ready(function() {
+	
+var options = {
+  auth: {
+    responseType: 'id_token token',
+    access_type: 'offline',
+  }
+};
+   lock = new Auth0Lock('qQBp5GOeYQXFu9JXH96wApE20YzGn1yH', 'tmthetom.eu.auth0.com', options);
+   
+   lock.on('authenticated', function(authResult) {
+    lock.getUserInfo(authResult.accessToken, function(error, profile) {
+        if (error) {
+                    console.log('Cannot get user', error);
+                    return;        
+                   }
+        console.log('connected and authenticated');
+        localStorage.setItem('userToken', authResult.idToken);
+        localStorage.setItem('accessToken', authResult.accessToken);
+		userToken = authResult.idToken;
+        localStorage.setItem('userProfile', profile);
+		userProfile = profile;
+		var logoutButton = document.getElementById("logoutButton");
+            logoutButton.style.display = "block";
+			
+  var loginButton = document.getElementById("loginButton");
+  loginButton.style.display = "none";
+
+
+    });
+});
+
+if (userToken && accessToken) {
+    lock.getUserInfo(accessToken, function (err, profile) {
+        if (err) {
+            return alert('There was an error getting the profile: ' + err.message);
+        }        
+        userProfile = profile;
+		
+				var logoutButton = document.getElementById("logoutButton");
+            logoutButton.style.display = "block";
+			
+  var loginButton = document.getElementById("loginButton");
+  loginButton.style.display = "none";
+
+    });
+}
+
+});
+
+// tlačítko login
+function login(){
+  lock.show();
+}
+
+// tlačítko logout
+function logout() {
+  localStorage.removeItem('userToken');
+  localStorage.removeItem('accessToken');
+  window.location.href = "/";
+}
 
 // pro účely refreshe userlistu
 socket.on('setCurrentRoom', function(current_room) {
 room = current_room;
 });
 
-// spustí se po připojení
-socket.on('connect', function(){
-	socket.emit('addUser', prompt("What's your name?"));
+// připojení
+socket.on('connect', function () {
+  socket
+    .emit('authenticate', {token: userToken})
+    .on('authenticated', function () {
+       console.log("authorized!!");
+    })
+    .on('unauthorized', function(msg) {
+      console.log("unauthorized: " + JSON.stringify(msg.data));
+      throw new Error(msg.data.type);
+    })
 });
 
 // při aktualizaci chatu - zprávy, connect/disconnect, změna roomu

@@ -7,6 +7,8 @@
   <script type="text/javascript" src="socket.io/socket.io.js"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
   <script type="text/javascript" src="scripts/frontend.js"></script>
+  <script type="text/javascript" src="https://cdn.auth0.com/js/lock/11.3.0/lock.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 </head>
 <body>
 	<!-- Container for app -->
@@ -30,6 +32,8 @@
 			<!-- Header -->
 			<div class="header">
 				<div class="headline">Conversation</div>
+				 <input type="button" id="loginButton" onclick="login()" value="Login"/> 
+				 <input type="button" id="logoutButton" onclick="logout()" value="Logout" style="display:none"/> 
 			</div>
 			
 			<!-- Content -->
