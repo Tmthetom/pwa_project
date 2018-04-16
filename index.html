@@ -32,8 +32,7 @@
 			<!-- Header -->
 			<div class="header">
 				<div class="headline">Conversation</div>
-				 <input type="button" id="loginButton" onclick="login()" value="Login"/> 
-				 <input type="button" id="logoutButton" onclick="logout()" value="Logout" style="display:none"/> 
+					<input type="button" id="logoutButton" onclick="logout()" value="Logout" style="display:none"/> 
 			</div>
 			
 			<!-- Content -->
@@ -68,5 +67,12 @@
 		</div>
 		
 	</div>
+	
+	<!-- Lock (when not logged in) -->
+	<div id="lockForm">
+		<img id="lockImage" src="style/template/lock.svg" />
+		<input type="button" id="loginButton" onclick="login()" value="Login"/> 
+	</div>
+
 </body>
 </html>

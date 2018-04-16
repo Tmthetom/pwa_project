@@ -34,7 +34,7 @@ var options = {
 		loginButton.style.display = "none";
 		
 		location.reload();  // aktualizace stránky
-
+		closeLockScreen();  // zavření přihlašovacího okna
     });
 });
 
@@ -65,7 +65,8 @@ function login(){
 function logout() {
   localStorage.removeItem('userToken');
   localStorage.removeItem('accessToken');
-  window.location.href = "/";
+  window.location.href = "/";  // aktualizace stránky
+  openLockScreen();  // otevření přihlašovacího okna
 }
 
 // pro účely refreshe userlistu
@@ -156,4 +157,24 @@ function setFocusToMessageBox(){
 function updateScroll(){
     var element = document.getElementById("conversation");
     element.scrollTop = element.scrollHeight;
+}
+
+// otevření přihlašovacího okna
+function openLockScreen(){
+    var element = document.getElementById("lockForm");
+    element.style.display = "block";
+	
+	var element = document.getElementById("wrapper");
+    element.style.filter = "blur(7px)";
+	element.style.-webkit-filter = "blur(7px)";
+}
+
+// zavření přihlašovacího okna
+function closeLockScreen(){
+    var element = document.getElementById("lockForm");
+    element.style.display = "none";
+	
+	var element = document.getElementById("wrapper");
+    element.style.filter = "blur(0px)";
+	element.style.-webkit-filter = "blur(0px)";
 }

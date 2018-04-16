@@ -10,6 +10,8 @@ body {
 	position: absolute;
 	width: 100%;
 	height: 100%;
+	-webkit-filter: blur(7px);
+    filter: blur(7px);
 }
 
 /* Tabs */
@@ -59,6 +61,7 @@ body {
 }
 
 /* Conversation */
+
 #conversation {
 	max-height: 70%;
 }
@@ -92,9 +95,58 @@ body {
 	color: black;
 	border-width: 0px;
 }
+#messageSend:hover {
+	background-color: #a4ff73;
+}
 
 /* Users */
 
 .userName {
 	text-align: center;
+}
+
+/* Lock (when not logged in) */
+
+#lockForm {
+	display: block;
+	position: absolute;
+	z-index: 100;
+	height: auto;
+	width: 400px;
+	top: 20%;
+	margin-left: calc(50% - 200px);
+	border-radius: 6px;
+    background-color: rgba(201,201,201,0.54);
+    margin-top: 8%;
+    -webkit-box-shadow: 2px 2px 10px rgba(114,114,114,1.00);
+    box-shadow: 2px 2px 10px rgba(114,114,114,1.00);
+}
+#lockImage {  /* Lock image */
+	width: 50%;
+	height: 50%;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	padding-top: 5%;
+}
+#loginButton {  /* Lock button */
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	display: block;
+	padding-bottom: 8px;
+	border-radius: 4px;
+	padding-top: 8px;
+	color: black !important;
+	border-style: groove;
+	background-color: rgba(92,100,232,0.55);
+	color: rgba(255,255,255,1.00);
+	-webkit-box-shadow: 0px 0px 2px rgba(0,0,0,1.00);
+	box-shadow: 0px 0px 2px rgba(0,0,0,1.00);
+	border-width: 0px;
+}
+#loginButton:hover {
+	background-color: #a4ff73;
 }
