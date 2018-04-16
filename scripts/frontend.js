@@ -16,22 +16,24 @@ var options = {
    
    lock.on('authenticated', function(authResult) {
     lock.getUserInfo(authResult.accessToken, function(error, profile) {
-        if (error) {
-                    console.log('Cannot get user', error);
-                    return;        
-                   }
+		if (error) {
+			console.log('Cannot get user', error);
+			return;        
+		}
         console.log('connected and authenticated');
         localStorage.setItem('userToken', authResult.idToken);
         localStorage.setItem('accessToken', authResult.accessToken);
 		userToken = authResult.idToken;
         localStorage.setItem('userProfile', profile);
 		userProfile = profile;
+		
 		var logoutButton = document.getElementById("logoutButton");
             logoutButton.style.display = "block";
 			
-  var loginButton = document.getElementById("loginButton");
-  loginButton.style.display = "none";
-
+		var loginButton = document.getElementById("loginButton");
+		loginButton.style.display = "none";
+		
+		location.reload();  // aktualizace stránky
 
     });
 });

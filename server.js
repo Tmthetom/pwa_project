@@ -24,9 +24,7 @@ on('connection', socketioJwt.authorize({
     timeout: 15000
   })).on('authenticated', function(socket) {
     //socket je autorizovaný, můžeme pokračovat
-	
-		// aktualizace stránky
-		window.location.href = "/";
+
 		// načtení uživatelského jména
 		socket.username = socket.decoded_token.name;
 		// defaultní místnost
