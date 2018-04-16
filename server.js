@@ -16,7 +16,7 @@ app.use('/style', express.static(__dirname + '/style'));
 
 // definice globálních proměnných
 var usernames = {};
-var rooms = ['General','School','Work'];
+var rooms = ['General','School','Work', 'Cars', 'Nature'];
 
 io.sockets.
 on('connection', socketioJwt.authorize({
