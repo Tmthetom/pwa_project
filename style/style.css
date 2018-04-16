@@ -29,6 +29,19 @@ body {
 	width: 14.8%;
 	border-left: 1px solid rgba(0, 0, 0, .10);
 }
+@media only screen and (max-width: 1000px) {
+    #conversationTab {  /* List of users */
+		width: 69.9%;
+	}
+}
+@media only screen and (max-width: 675px) {
+    #conversationTab {  /* List of users */
+		width: 65%;
+	}
+	#userTab {  /* List of users */
+		width: 19.5%;
+	}
+}
 
 /* Inner tab */
 
