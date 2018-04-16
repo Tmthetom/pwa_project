@@ -26,7 +26,7 @@ on('connection', socketioJwt.authorize({
     //socket je autorizovaný, můžeme pokračovat
 	
 		// aktualizace stránky
-		location.reload();
+		window.location.href = "/";
 		// načtení uživatelského jména
 		socket.username = socket.decoded_token.name;
 		// defaultní místnost
