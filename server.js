@@ -24,11 +24,11 @@ on('connection', socketioJwt.authorize({
     timeout: 15000
   })).on('authenticated', function(socket) {
     //socket je autorizovaný, můžeme pokračovat
-			socket.username = socket.decoded_token.nickname;
+			socket.username = socket.decoded_token.name;
 		// defaultní místnost
 		socket.room = rooms[0];
 		// uloží se do globálního listu uživatelů
-		usernames[socket.decoded_token.nickname] = socket.room;
+		usernames[socket.decoded_token.name] = socket.room;
 		// socket se připojí do defaultní místnosti
 		socket.join(rooms[0]);	
 		// uložíme informaci na klientovi
@@ -36,7 +36,7 @@ on('connection', socketioJwt.authorize({
 		// zpráva do chatu, že došlo k připojení (jen pro uživatele)
 		socket.emit('updateChat', 'SERVER', 'You have connected to ' + socket.room);
 		// zpráva všem uživatelům v roomu1, že došlo k připojení
-		socket.broadcast.to(socket.room).emit('updateChat', 'SERVER', socket.decoded_token.nickname + ' has connected to this room');
+		socket.broadcast.to(socket.room).emit('updateChat', 'SERVER', socket.decoded_token.name + ' has connected to this room');
 		// aktualizace odkazů na roomy na klientovi
 		socket.emit('updateRooms', rooms, rooms[0]);
 		// aktualizace seznamu uživatelů - všichni uživatelé, provede se jen pro ty v současném roomu
