@@ -90,7 +90,8 @@ socket.on('updateChat', function (username, data) {
 	var time = new Date();
 	// čas + jméno + zpráva
 	$('#conversation').append(("0" + time.getHours()).slice(-2) + ":" + ("0" + time.getMinutes()).slice(-2) +
-	' - <b>'+username + ':</b> ' + data + '<br>');
+	' - <b>'+ username + ':</b> ' + data + '<br>');
+	notificationSound();
 	updateScroll();
 });
 
@@ -164,3 +165,9 @@ function openLockScreen(){
 	var element = document.getElementById("wrapper");
     element.style.filter = "blur(7px)";
 }
+
+// notifikace nové zprávy
+function notificationSound() {
+	var notification = document.getElementById("notificationSound"); 
+    notification.play(); 
+} 
