@@ -42,6 +42,21 @@ body {
 		width: 19.5%;
 	}
 }
+@media only screen and (max-width: 410px) {
+    #conversationTab {  /* List of users */
+		width: 64.9%;
+	}
+}
+@media only screen and (max-width: 345px) {
+    #conversationTab {  /* List of users */
+		width: 64.8%
+	}
+}
+@media only screen and (max-width: 300px) {
+    #conversationTab {  /* List of users */
+		width: 64.7%;
+	}
+}
 
 /* Inner tab */
 
