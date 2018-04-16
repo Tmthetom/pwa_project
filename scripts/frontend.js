@@ -5,13 +5,13 @@ var userToken = localStorage.getItem('userToken');
 var accessToken = localStorage.getItem('accessToken');
 
 $(document).ready(function() {
-	
-var options = {
-  auth: {
-    responseType: 'id_token token',
-    access_type: 'offline',
-  }
-};
+	openLockScreen();  // otevření přihlašovacího okna
+	var options = {
+	  auth: {
+		responseType: 'id_token token',
+		access_type: 'offline',
+	  }
+	};
    lock = new Auth0Lock('qQBp5GOeYQXFu9JXH96wApE20YzGn1yH', 'tmthetom.eu.auth0.com', options);
    
    lock.on('authenticated', function(authResult) {
