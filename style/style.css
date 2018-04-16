@@ -123,6 +123,9 @@ body {
 	background-color: #b89dff;
 	color: black;
 }
+#logoutButton:hover {
+	background-color: #a4ff73;
+}
 
 /* Lock (when not logged in) */
 
