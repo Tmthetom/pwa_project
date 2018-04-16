@@ -166,7 +166,7 @@ function openLockScreen(){
 	
 	var element = document.getElementById("wrapper");
     element.style.filter = "blur(7px)";
-	element.style.-webkit-filter = "blur(7px)";
+	/*element.style.-webkit-filter = "blur(7px)";*/
 }
 
 // zavření přihlašovacího okna
@@ -176,5 +176,5 @@ function closeLockScreen(){
 	
 	var element = document.getElementById("wrapper");
     element.style.filter = "blur(0px)";
-	element.style.-webkit-filter = "blur(0px)";
+	/*element.style.-webkit-filter = "blur(0px)";*/
 }
