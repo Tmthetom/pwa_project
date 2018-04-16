@@ -87,15 +87,15 @@ body {
 }
 .roomName a {
 	display: block;
-	text-decoration: none;
 	padding: 20px 0 20px 0;
+	text-decoration: none;
 }
 .roomName a:hover {
 	background-color: #b89dff;
 }
 #currentRoom{
 	font-weight: bold;
-	padding: 10px 0 10px 0;
+	padding: 20px 0 20px 0;
 	background-color: #ebe3ff;
 }
 #currentRoom:hover {
