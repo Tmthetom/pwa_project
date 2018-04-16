@@ -5,7 +5,6 @@ var userToken = localStorage.getItem('userToken');
 var accessToken = localStorage.getItem('accessToken');
 
 $(document).ready(function() {
-	openLockScreen();  // otevření přihlašovacího okna
 	var options = {
 	  auth: {
 		responseType: 'id_token token',
@@ -34,7 +33,6 @@ $(document).ready(function() {
 		loginButton.style.display = "none";
 		
 		location.reload();  // aktualizace stránky
-		closeLockScreen();  // zavření přihlašovacího okna
     });
 });
 
@@ -43,17 +41,15 @@ if (userToken && accessToken) {
         if (err) {
             return alert('There was an error getting the profile: ' + err.message);
         }        
-        userProfile = profile;
+        userProfile = profile;		
 		
-				var logoutButton = document.getElementById("logoutButton");
-            logoutButton.style.display = "block";
-			
-  var loginButton = document.getElementById("loginButton");
-  loginButton.style.display = "none";
+		var logoutButton = document.getElementById("logoutButton");
+		logoutButton.style.display = "block";
 
+		var loginButton = document.getElementById("loginButton");
+		loginButton.style.display = "none";
     });
 }
-
 });
 
 // tlačítko login
@@ -82,8 +78,10 @@ socket.on('connect', function () {
        console.log("authorized!!");
     })
     .on('unauthorized', function(msg) {
-      console.log("unauthorized: " + JSON.stringify(msg.data));
-      throw new Error(msg.data.type);
+		openLockScreen();
+		console.log("unauthorized");
+      //console.log("unauthorized: " + JSON.stringify(msg.data));
+      //throw new Error(msg.data.type);
     })
 });
 
@@ -167,14 +165,4 @@ function openLockScreen(){
 	var element = document.getElementById("wrapper");
     element.style.filter = "blur(7px)";
 	/*/*element.style.-webkit-filter = "blur(7px)";*/
-}
-
-// zavření přihlašovacího okna
-function closeLockScreen(){
-    var element = document.getElementById("lockForm");
-    element.style.display = "none";
-	
-	var element = document.getElementById("wrapper");
-    element.style.filter = "blur(0px)";
-	/*element.style.-webkit-filter = "blur(0px)";*/
 }
