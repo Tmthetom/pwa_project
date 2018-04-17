@@ -75,13 +75,12 @@ socket.on('connect', function () {
   socket
     .emit('authenticate', {token: userToken})
     .on('authenticated', function () {
-       console.log("authorized!!");
+		//console.log("authorized!!");
     })
     .on('unauthorized', function(msg) {
 		openLockScreen();
-		console.log("unauthorized");
-      //console.log("unauthorized: " + JSON.stringify(msg.data));
-      //throw new Error(msg.data.type);
+		//console.log("unauthorized: " + JSON.stringify(msg.data));
+		//throw new Error(msg.data.type);
     })
 });
 

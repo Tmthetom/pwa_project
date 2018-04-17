@@ -13,6 +13,7 @@ app.get('/', function (req, res) {
 });
 app.use('/scripts', express.static(__dirname + '/scripts'));
 app.use('/style', express.static(__dirname + '/style'));
+app.use('/sound', express.static(__dirname + '/sound'));
 
 // definice globálních proměnných
 var usernames = {};
