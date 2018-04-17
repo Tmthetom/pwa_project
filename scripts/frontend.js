@@ -31,11 +31,8 @@ $(document).ready(function() {
 			// Create session for future connections
 			localStorage.setItem('userToken', authResult.idToken);  // Store user token
 			localStorage.setItem('accessToken', authResult.accessToken);  // Store access token
-			//userToken = authResult.idToken;
 			localStorage.setItem('userProfile', profile);  // Store user profile object
-			//userProfile = profile;  // Save username in firs
 			localStorage.setItem('currentUser', profile.name);  // Store username
-			//currentUser = profile.name;
 
 			// Reload page for open communication
 			location.reload();
