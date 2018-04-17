@@ -1,3 +1,4 @@
+// Global variables
 var socket = io.connect('https://pwa-moravec.herokuapp.com/');
 var room = 'default';
 var lock = null;
@@ -5,7 +6,7 @@ var userToken = localStorage.getItem('userToken');
 var accessToken = localStorage.getItem('accessToken');
 var currentUser = localStorage.getItem('currentUser');
 
-// přihlašování uživatele
+// First time connection
 $(document).ready(function() {
 	var options = {
 		auth: {
@@ -14,33 +15,34 @@ $(document).ready(function() {
 		}
 	};
 	
-	// kontrola přihlášení
-	lock = new Auth0Lock('qQBp5GOeYQXFu9JXH96wApE20YzGn1yH', 'tmthetom.eu.auth0.com', options);
+	// User login (user authentication by Auth0)
+	lock = new Auth0Lock('qQBp5GOeYQXFu9JXH96wApE20YzGn1yH', 'tmthetom.eu.auth0.com', options);  // Auth0
+	
+	// Connection (when user authenticated by Auth0)
 	lock.on('authenticated', function(authResult) {
 		lock.getUserInfo(authResult.accessToken, function(error, profile) {
 			
-			// kontrola přihlášení
+			// Double check for errors
 			if (error) {
 				console.log('Cannot get user', error);
 				return;        
 			}
 			
-			// uložení dat
-			console.log('connected and authenticated');
-			localStorage.setItem('userToken', authResult.idToken);
-			localStorage.setItem('accessToken', authResult.accessToken);
-			userToken = authResult.idToken;
-			localStorage.setItem('userProfile', profile);
-			userProfile = profile;
-			localStorage.setItem('currentUser', profile.name);
-			currentUser = profile.name;
+			// Create session for future connections
+			localStorage.setItem('userToken', authResult.idToken);  // Store user token
+			localStorage.setItem('accessToken', authResult.accessToken);  // Store access token
+			//userToken = authResult.idToken;
+			localStorage.setItem('userProfile', profile);  // Store user profile object
+			//userProfile = profile;  // Save username in firs
+			localStorage.setItem('currentUser', profile.name);  // Store username
+			//currentUser = profile.name;
 
-			// aktualizace stránky
+			// Reload page for open communication
 			location.reload();
 		});
 	});
 
-	// přihlášení se nepodařilo
+	// Connection not established
 	if (userToken && accessToken) {
 		lock.getUserInfo(accessToken, function (err, profile) {
 			if (err) {
@@ -51,75 +53,84 @@ $(document).ready(function() {
 	}
 });
 
-// tlačítko login
+// Connection with existing token
+socket.on('connect', function () {
+	
+	// Try to authenticate user
+	socket.emit('authenticate', {token: userToken})
+	
+	// User authenticated!
+    .on('authenticated', function () {
+		
+		// Show logout button
+		var logoutButton = document.getElementById("logoutButton");
+		logoutButton.style.display = "block";
+    })
+	
+	// Not authenticated
+    .on('unauthorized', function(msg) {
+		openLockScreen();  // Show lock screen over page
+    })
+});
+
+// Show Auth0 login
 function login(){
-  lock.show();  // otevřít přihlašovací okno Auth0
+  lock.show();
 }
 
-// tlačítko logout
+// Logout from Auth0
 function logout() {
-	localStorage.removeItem('userToken');
-	localStorage.removeItem('accessToken');
-	window.location.href = "/";  // aktualizace stránky
-	openLockScreen();  // otevření přihlašovacího okna
+	localStorage.removeItem('userToken');  // Remove token
+	localStorage.removeItem('accessToken');  // Remove token
+	location.reload();  // Reload page to close communicator
+	openLockScreen();  // Show lock screen over page
 }
 
-// pro účely refreshe userlistu
+// Set users current room
 socket.on('setCurrentRoom', function(current_room) {
 	room = current_room;
 });
 
-// připojení
-socket.on('connect', function () {
-  socket
-    .emit('authenticate', {token: userToken})
-    .on('authenticated', function () {
-		//console.log("authorized!!");
-		
-		// zveřejnění odhlašovacího tlačítka
-		var logoutButton = document.getElementById("logoutButton");
-		logoutButton.style.display = "block";
-    })
-    .on('unauthorized', function(msg) {
-		openLockScreen();
-		//console.log("unauthorized: " + JSON.stringify(msg.data));
-		//throw new Error(msg.data.type);
-    })
-});
-
-// při aktualizaci chatu - zprávy, connect/disconnect, změna roomu
+// Update chat (new message, connection/disconnection, switch room)
 socket.on('updateChat', function (username, data) {
+	
+	// Get date time now
 	var time = new Date();
 	
-	// čas + jméno + zpráva
+	// Show notification (time + name + message)
 	$('#conversation').append(("0" + time.getHours()).slice(-2) + ":" + ("0" + time.getMinutes()).slice(-2) +
 	' - <b>'+ username + ':</b> ' + data + '<br>');
 	
-	// přehrát notifikaci
-	if(username != currentUser){
+	// Play notification sound
+	if(username != currentUser){  // Only when not from current user
 		notificationSound();
 	}
 	
-	// posunutí scrollu chatovacího okna k nové zprávě
+	// Autoscroll in communication window
 	updateScroll();
 });
 
-// odkazy pro přepínání mezi roomy
+// Update room links (because current room does´t have link)
 socket.on('updateRooms', function(rooms, current_room) {
-	$('#rooms').empty();
+	$('#rooms').empty();  // Empty current room list
 	$.each(rooms, function(key, value) {
+		
+		// Current room (without link)
 		if(value == current_room){
 			$('#rooms').append('<div class="roomName" id="currentRoom">' + value + '</div>');
 		}
+		
+		// Other rooms (with link)
 		else {
 			$('#rooms').append('<div class="roomName"><a href="#" onclick="switchRoom(\''+value+'\');setFocusToMessageBox()">' + value + '</a></div>');
 		}
 	});
 });
 
-// pro aktualizaci seznamu uživatelů
+// Update userlist
 socket.on('updateUsers', function(users, current_room) {
-	// když jsem ve stejném roomu, kde se provedla změna, provede se refresh
+	
+	// Users in current room
 	if(current_room.valueOf() == room.valueOf()){
 	$("#users").empty();
 	$.each(users, function (key, value) {
@@ -128,19 +139,19 @@ socket.on('updateUsers', function(users, current_room) {
 		}
 	});
 	
-	// refresh všech uživatelů
+	// All users
 	$("#usersAll").empty();
 	$.each(users, function (key, value) {
 		$('#usersAll').append('<div class="userName">' + key + '</div>');
 	});};
 });
 
-// přepínání mezi roomy na serveru
+// Switch room
 function switchRoom(room){
 	socket.emit('switchRoom', room);
 }
 
-// funkce tlačítka Send
+// Send message (button)
 $(function(){
 	$('#messageSend').click( function() {
 		var message = $('#messageField').val();
@@ -156,18 +167,18 @@ $(function(){
 	});
 });
 
-// přepínání mezi roomy na serveru
+// Set focus on messagebox (when lost)
 function setFocusToMessageBox(){
 	document.getElementById("messageField").focus();
 }
 
-// posunutí scrollu chatovacího okna k nové zprávě
+// Autoscroll in communication window
 function updateScroll(){
     var element = document.getElementById("conversation");
     element.scrollTop = element.scrollHeight;
 }
 
-// otevření přihlašovacího okna
+// Show lock screen layer over page
 function openLockScreen(){
     var element = document.getElementById("lockForm");
     element.style.display = "block";
@@ -175,7 +186,7 @@ function openLockScreen(){
     element.style.filter = "blur(7px)";
 }
 
-// notifikace nové zprávy
+// Notification sound
 function notificationSound() {
 	var notification = document.getElementById("notificationSound"); 
     notification.play(); 
