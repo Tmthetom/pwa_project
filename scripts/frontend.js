@@ -32,8 +32,8 @@ $(document).ready(function() {
 			userToken = authResult.idToken;
 			localStorage.setItem('userProfile', profile);
 			userProfile = profile;
-			localStorage.setItem('currentUser', JSON.stringify(profile));
-			currentUser = JSON.stringify(profile);
+			localStorage.setItem('currentUser', JSON.stringify(profile).name);
+			currentUser = JSON.stringify(profile).name;
 
 			// aktualizace stránky
 			location.reload();
