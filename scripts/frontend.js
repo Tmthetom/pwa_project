@@ -31,11 +31,7 @@ $(document).ready(function() {
 			userToken = authResult.idToken;
 			localStorage.setItem('userProfile', profile);
 			userProfile = profile;
-
-			// zveřejnění odhlašovacího tlačítka
-			var logoutButton = document.getElementById("logoutButton");
-			logoutButton.style.display = "block";
-
+			
 			// aktualizace stránky
 			location.reload();
 		});
@@ -76,6 +72,10 @@ socket.on('connect', function () {
     .emit('authenticate', {token: userToken})
     .on('authenticated', function () {
 		//console.log("authorized!!");
+		
+		// zveřejnění odhlašovacího tlačítka
+		var logoutButton = document.getElementById("logoutButton");
+		logoutButton.style.display = "block";
     })
     .on('unauthorized', function(msg) {
 		openLockScreen();
