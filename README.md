@@ -9,4 +9,4 @@
 https://pwa-moravec.herokuapp.com/
 
 ## Screenshot of client:
-![](images/screenshot.png "Screenshot of client")
+![](images/screenshot.PNG "Screenshot of client")
