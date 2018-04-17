@@ -37,9 +37,9 @@ on('connection', socketioJwt.authorize({
 		// uložíme informaci na klientovi
 		socket.emit('setCurrentRoom', socket.room);
 		// zpráva do chatu, že došlo k připojení (jen pro uživatele)
-		socket.emit('updateChat', 'SERVER', 'You have connected to ' + socket.room, socket.username);
+		socket.emit('updateChat', 'SERVER', 'You have connected to ' + socket.room);
 		// zpráva všem uživatelům v roomu1, že došlo k připojení
-		socket.broadcast.to(socket.room).emit('updateChat', 'SERVER', socket.decoded_token.name + ' has connected to this room', socket.username);
+		socket.broadcast.to(socket.room).emit('updateChat', 'SERVER', socket.decoded_token.name + ' has connected to this room');
 		// aktualizace odkazů na roomy na klientovi
 		socket.emit('updateRooms', rooms, rooms[0]);
 		// aktualizace seznamu uživatelů - všichni uživatelé, provede se jen pro ty v současném roomu
@@ -48,7 +48,7 @@ on('connection', socketioJwt.authorize({
 
 	// posílání chatových zpráv, zpráva se pošle na sockety v současném roomu
 	socket.on('sendChat', function (data) {
-		io.sockets.in(socket.room).emit('updateChat', socket.username, data, socket.username);
+		io.sockets.in(socket.room).emit('updateChat', socket.username, data);
 	});
 	
 	// přepínání roomu
@@ -65,13 +65,13 @@ on('connection', socketioJwt.authorize({
 		// aktualizace seznamu uživatelů v starém roomu
 		io.sockets.emit('updateUsers', usernames, socket.room);	
 		// zpráva do chatu, že došlo k připojení (jen pro uživatele)
-		socket.emit('updateChat', 'SERVER', 'You have connected to '+ newroom, socket.username);	
+		socket.emit('updateChat', 'SERVER', 'You have connected to '+ newroom);	
 		// zpráva všem uživatelům v starém roomu, že se odpojil uživatel
-		socket.broadcast.to(socket.room).emit('updateChat', 'SERVER', socket.username+' has left this room', socket.username);
+		socket.broadcast.to(socket.room).emit('updateChat', 'SERVER', socket.username+' has left this room');
 		// uložíme proměnnou
 		socket.room = newroom;
 		// zpráva všem uživatelům v novém roomu, že došlo k připojení
-		socket.broadcast.to(newroom).emit('updateChat', 'SERVER', socket.username+' has joined this room', socket.username);
+		socket.broadcast.to(newroom).emit('updateChat', 'SERVER', socket.username+' has joined this room');
 		// aktualizace odkazů na roomy na klientovi
 		socket.emit('updateRooms', rooms, newroom);	
 	    // aktualizace seznamu uživatelů v novém roomu
@@ -85,7 +85,7 @@ on('connection', socketioJwt.authorize({
 		//refresh user listu pro uživatele ve stejném roomu
 		io.sockets.emit('updateUsers', usernames, socket.room);
 		// zpráva všem uživatelům v roomu, že se odpojil uživatel
-		socket.broadcast.emit('updateChat', 'SERVER', socket.username + ' has disconnected', socket.username);
+		socket.broadcast.emit('updateChat', 'SERVER', socket.username + ' has disconnected');
 		//odpojení socketu z roomu
 		socket.leave(socket.room);
 	});

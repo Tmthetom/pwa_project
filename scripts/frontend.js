@@ -3,6 +3,7 @@ var room = 'default';
 var lock = null;
 var userToken = localStorage.getItem('userToken');
 var accessToken = localStorage.getItem('accessToken');
+var currentUser;
 
 // přihlašování uživatele
 $(document).ready(function() {
@@ -31,6 +32,7 @@ $(document).ready(function() {
 			userToken = authResult.idToken;
 			localStorage.setItem('userProfile', profile);
 			userProfile = profile;
+			currentUser = profile.nickname;
 			
 			// aktualizace stránky
 			location.reload();
@@ -85,7 +87,7 @@ socket.on('connect', function () {
 });
 
 // při aktualizaci chatu - zprávy, connect/disconnect, změna roomu
-socket.on('updateChat', function (username, data, current_user) {
+socket.on('updateChat', function (username, data) {
 	var time = new Date();
 	
 	// čas + jméno + zpráva
@@ -93,12 +95,13 @@ socket.on('updateChat', function (username, data, current_user) {
 	' - <b>'+ username + ':</b> ' + data + '<br>');
 	
 	// přehrát notifikaci
-	console.log("username: " + username + ", current username: " + current_user);
-	if(username == current_user){
+	console.log("Sender: " + username);
+	console.log("Current user: " + currentUser);
+	if(username == currentUser){
 		notificationSound();
 	}
 	
-	// 
+	// posunutí scrollu chatovacího okna k nové zprávě
 	updateScroll();
 });
 
