@@ -87,10 +87,18 @@ socket.on('connect', function () {
 // při aktualizaci chatu - zprávy, connect/disconnect, změna roomu
 socket.on('updateChat', function (username, data) {
 	var time = new Date();
+	
 	// čas + jméno + zpráva
 	$('#conversation').append(("0" + time.getHours()).slice(-2) + ":" + ("0" + time.getMinutes()).slice(-2) +
 	' - <b>'+ username + ':</b> ' + data + '<br>');
-	notificationSound();
+	
+	// přehrát notifikaci
+	console.log("username: " + username + ", current username: " + socket.decoded_token.name);
+	if(username == socket.decoded_token.name){
+		notificationSound();
+	}
+	
+	// 
 	updateScroll();
 });
 
