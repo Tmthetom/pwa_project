@@ -4,70 +4,70 @@ var lock = null;
 var userToken = localStorage.getItem('userToken');
 var accessToken = localStorage.getItem('accessToken');
 
+// přihlašování uživatele
 $(document).ready(function() {
 	var options = {
-	  auth: {
-		responseType: 'id_token token',
-		access_type: 'offline',
-	  }
-	};
-   lock = new Auth0Lock('qQBp5GOeYQXFu9JXH96wApE20YzGn1yH', 'tmthetom.eu.auth0.com', options);
-   
-   lock.on('authenticated', function(authResult) {
-    lock.getUserInfo(authResult.accessToken, function(error, profile) {
-		if (error) {
-			console.log('Cannot get user', error);
-			return;        
+		auth: {
+			responseType: 'id_token token',
+			access_type: 'offline',
 		}
-        console.log('connected and authenticated');
-        localStorage.setItem('userToken', authResult.idToken);
-        localStorage.setItem('accessToken', authResult.accessToken);
-		userToken = authResult.idToken;
-        localStorage.setItem('userProfile', profile);
-		userProfile = profile;
-		
-		var logoutButton = document.getElementById("logoutButton");
-            logoutButton.style.display = "block";
+	};
+	
+	// kontrola přihlášení
+	lock = new Auth0Lock('qQBp5GOeYQXFu9JXH96wApE20YzGn1yH', 'tmthetom.eu.auth0.com', options);
+	lock.on('authenticated', function(authResult) {
+		lock.getUserInfo(authResult.accessToken, function(error, profile) {
 			
-		var loginButton = document.getElementById("loginButton");
-		loginButton.style.display = "none";
-		
-		location.reload();  // aktualizace stránky
-    });
-});
+			// kontrola přihlášení
+			if (error) {
+				console.log('Cannot get user', error);
+				return;        
+			}
+			
+			// sušenky
+			console.log('connected and authenticated');
+			localStorage.setItem('userToken', authResult.idToken);
+			localStorage.setItem('accessToken', authResult.accessToken);
+			userToken = authResult.idToken;
+			localStorage.setItem('userProfile', profile);
+			userProfile = profile;
 
-if (userToken && accessToken) {
-    lock.getUserInfo(accessToken, function (err, profile) {
-        if (err) {
-            return alert('There was an error getting the profile: ' + err.message);
-        }        
-        userProfile = profile;		
-		
-		var logoutButton = document.getElementById("logoutButton");
-		logoutButton.style.display = "block";
+			// zveřejnění odhlašovacího tlačítka
+			var logoutButton = document.getElementById("logoutButton");
+			logoutButton.style.display = "block";
 
-		var loginButton = document.getElementById("loginButton");
-		loginButton.style.display = "none";
-    });
-}
+			// aktualizace stránky
+			location.reload();
+		});
+	});
+
+	// přihlášení se nepodařilo
+	if (userToken && accessToken) {
+		lock.getUserInfo(accessToken, function (err, profile) {
+			if (err) {
+				return alert('There was an error getting the profile: ' + err.message);
+			}        
+			userProfile = profile;		
+		});
+	}
 });
 
 // tlačítko login
 function login(){
-  lock.show();
+  lock.show();  // otevřít přihlašovací okno Auth0
 }
 
 // tlačítko logout
 function logout() {
-  localStorage.removeItem('userToken');
-  localStorage.removeItem('accessToken');
-  window.location.href = "/";  // aktualizace stránky
-  openLockScreen();  // otevření přihlašovacího okna
+	localStorage.removeItem('userToken');
+	localStorage.removeItem('accessToken');
+	window.location.href = "/";  // aktualizace stránky
+	openLockScreen();  // otevření přihlašovacího okna
 }
 
 // pro účely refreshe userlistu
 socket.on('setCurrentRoom', function(current_room) {
-room = current_room;
+	room = current_room;
 });
 
 // připojení
