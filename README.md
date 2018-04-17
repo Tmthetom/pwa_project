@@ -5,4 +5,5 @@
 https://pwa-moravec.herokuapp.com/
 
 ## Used frameworks
-* Express
+* Backend: Express (Node.js web application framework)
+* Frontend: Javascript (jQuery), Socket.IO
