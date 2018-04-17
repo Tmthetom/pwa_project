@@ -1,93 +1,76 @@
-// nastavení express.js
+// Express server settings
 var express = require('express'),
     app = express(),
     server = require('http').createServer(app),
     io = require('socket.io').listen(server),
 	socketioJwt = require('socketio-jwt');
 
+// Open listening
 server.listen(process.env.PORT || 8080);
 
-// routing
+// Express routing in directories
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
-app.use('/scripts', express.static(__dirname + '/scripts'));
-app.use('/style', express.static(__dirname + '/style'));
-app.use('/sound', express.static(__dirname + '/sound'));
+app.use('/scripts', express.static(__dirname + '/scripts'));  // Frontend
+app.use('/style', express.static(__dirname + '/style'));  // Custom CSS
+app.use('/sound', express.static(__dirname + '/sound'));  // Notifications
 
-// definice globálních proměnných
-var usernames = {};
-var rooms = ['General','School','Work', 'Cars', 'Nature'];
+// Global variables
+var usernames = {};  // List of all users
+var rooms = [  // List of all rooms
+	'General',
+	'School',
+	'Work', 
+	'Cars', 
+	'Nature'
+];
 
-io.sockets.
-on('connection', socketioJwt.authorize({
-    secret: 'yeMuI7XLMwwYAhzCtgrGqBLjg9rI5-jpHHs-zCiSfO-O3wFBHHUR12N8z9yCDqvN', //tajný klíč
-    timeout: 15000
-  })).on('authenticated', function(socket) {
-    //socket je autorizovaný, můžeme pokračovat
+// Server functions
+io.sockets.on('connection', socketioJwt.authorize({
+    secret: 'yeMuI7XLMwwYAhzCtgrGqBLjg9rI5-jpHHs-zCiSfO-O3wFBHHUR12N8z9yCDqvN', // Auth0 secret key
+    timeout: 15000  // Connection lifetime
 
-		// načtení uživatelského jména
-		socket.username = socket.decoded_token.name;
-		// defaultní místnost
-		socket.room = rooms[0];
-		// uloží se do globálního listu uživatelů
-		usernames[socket.decoded_token.name] = socket.room;
-		// socket se připojí do defaultní místnosti
-		socket.join(rooms[0]);	
-		// uložíme informaci na klientovi
-		socket.emit('setCurrentRoom', socket.room);
-		// zpráva do chatu, že došlo k připojení (jen pro uživatele)
-		socket.emit('updateChat', 'SERVER', 'You have connected to ' + socket.room);
-		// zpráva všem uživatelům v roomu1, že došlo k připojení
-		socket.broadcast.to(socket.room).emit('updateChat', 'SERVER', socket.decoded_token.name + ' has connected to this room');
-		// aktualizace odkazů na roomy na klientovi
-		socket.emit('updateRooms', rooms, rooms[0]);
-		// aktualizace seznamu uživatelů - všichni uživatelé, provede se jen pro ty v současném roomu
-		io.sockets.emit('updateUsers', usernames, socket.room);		
+	// Connection (when user authenticated by Auth0)
+	})).on('authenticated', function(socket) {
+		
+		// Connect user into default room
+		socket.username = socket.decoded_token.name;  // Load user name from selected account
+		socket.room = rooms[0];  // Set user default room
+		usernames[socket.decoded_token.name] = socket.room;  // Add user in userlist
+		socket.join(rooms[0]);  // Connect user into default room
+		socket.emit('setCurrentRoom', socket.room);  // Inform client about room connection
+		socket.emit('updateChat', 'SERVER', 'You have been connected to ' + socket.room);  // Inform user that he was connected
+		socket.broadcast.to(socket.room).emit('updateChat', 'SERVER', socket.decoded_token.name + ' has connected to this room');  // Inform all users in room about new connection
+		socket.emit('updateRooms', rooms, rooms[0]);  // Update client rooms links
+		io.sockets.emit('updateUsers', usernames, socket.room);  // Update client room userlist
 
 
-	// posílání chatových zpráv, zpráva se pošle na sockety v současném roomu
+	// Send message (into current room)
 	socket.on('sendChat', function (data) {
 		io.sockets.in(socket.room).emit('updateChat', socket.username, data);
 	});
 	
-	// přepínání roomu
+	// Switch room
 	socket.on('switchRoom', function(newroom){
-		
-		// odpojení ze starého, připojení se k novému
-		socket.leave(socket.room);
-		socket.join(newroom);
-		
-		// uložíme info o novém roomu do globálního seznamu uživatelů
-		usernames[socket.username] = newroom;
-		// uložíme informaci na klientovi
-		socket.emit('setCurrentRoom', newroom);
-		// aktualizace seznamu uživatelů v starém roomu
-		io.sockets.emit('updateUsers', usernames, socket.room);	
-		// zpráva do chatu, že došlo k připojení (jen pro uživatele)
-		socket.emit('updateChat', 'SERVER', 'You have connected to '+ newroom);	
-		// zpráva všem uživatelům v starém roomu, že se odpojil uživatel
-		socket.broadcast.to(socket.room).emit('updateChat', 'SERVER', socket.username+' has left this room');
-		// uložíme proměnnou
-		socket.room = newroom;
-		// zpráva všem uživatelům v novém roomu, že došlo k připojení
-		socket.broadcast.to(newroom).emit('updateChat', 'SERVER', socket.username+' has joined this room');
-		// aktualizace odkazů na roomy na klientovi
-		socket.emit('updateRooms', rooms, newroom);	
-	    // aktualizace seznamu uživatelů v novém roomu
-		io.sockets.emit('updateUsers', usernames, newroom);
+		socket.leave(socket.room);  // Leave old room
+		socket.join(newroom);  // Join new room
+		usernames[socket.username] = newroom;  // Change user current room in users list
+		socket.emit('setCurrentRoom', newroom);  // Inform client about new current room
+		io.sockets.emit('updateUsers', usernames, socket.room);  // Update user list in old room
+		socket.emit('updateChat', 'SERVER', 'You have connected to '+ newroom);  // Inform user that he was reconnected
+		socket.broadcast.to(socket.room).emit('updateChat', 'SERVER', socket.username+' has left this room');  // Inform all users in old room that user disconnected
+		socket.room = newroom;  // Save new current room
+		socket.broadcast.to(newroom).emit('updateChat', 'SERVER', socket.username+' has joined this room');  // Inform all users in room about new connection
+		socket.emit('updateRooms', rooms, newroom);  // Update client rooms links
+		io.sockets.emit('updateUsers', usernames, newroom);  // Update client room userlist
 	});
 	
-    // při odpojení
+    // Disconnection
 	socket.on('disconnect', function(){
-		//smazat uživatele z globálního seznamu
-		delete usernames[socket.username];
-		//refresh user listu pro uživatele ve stejném roomu
-		io.sockets.emit('updateUsers', usernames, socket.room);
-		// zpráva všem uživatelům v roomu, že se odpojil uživatel
-		socket.broadcast.emit('updateChat', 'SERVER', socket.username + ' has disconnected');
-		//odpojení socketu z roomu
-		socket.leave(socket.room);
+		delete usernames[socket.username];  // Delete user from userlist
+		io.sockets.emit('updateUsers', usernames, socket.room);  // Update client room userlist
+		socket.broadcast.emit('updateChat', 'SERVER', socket.username + ' has disconnected');  // Inform all users in room that user disconnected
+		socket.leave(socket.room);  // Disconnect from room
 	});
-
-  });
+});
