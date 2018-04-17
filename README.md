@@ -6,4 +6,3 @@ https://pwa-moravec.herokuapp.com/
 
 ## Used frameworks
 * Node.js
-* Express
