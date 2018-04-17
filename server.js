@@ -5,7 +5,7 @@ var express = require('express'),
     io = require('socket.io').listen(server),
 	socketioJwt = require('socketio-jwt');
 
-// Open listening
+// Start listening
 server.listen(process.env.PORT || 8080);
 
 // Express routing in directories
