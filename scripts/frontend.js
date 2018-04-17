@@ -32,7 +32,8 @@ $(document).ready(function() {
 			userToken = authResult.idToken;
 			localStorage.setItem('userProfile', profile);
 			userProfile = profile;
-			currentUser = profile.nickname;
+			currentUser = profile.username;
+			console.log("Current user in auth: " + profile.username);
 			
 			// aktualizace stránky
 			location.reload();
@@ -95,8 +96,10 @@ socket.on('updateChat', function (username, data) {
 	' - <b>'+ username + ':</b> ' + data + '<br>');
 	
 	// přehrát notifikaci
+	
 	console.log("Sender: " + username);
 	console.log("Current user: " + currentUser);
+	
 	if(username == currentUser){
 		notificationSound();
 	}
