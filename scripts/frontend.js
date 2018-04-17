@@ -33,7 +33,7 @@ $(document).ready(function() {
 			localStorage.setItem('userProfile', profile);
 			userProfile = profile;
 			localStorage.setItem('currentUser', profile.name);
-			currentUser = profile.name);
+			currentUser = profile.name;
 
 			// aktualizace stránky
 			location.reload();
