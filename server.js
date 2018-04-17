@@ -65,7 +65,7 @@ on('connection', socketioJwt.authorize({
 		// aktualizace seznamu uživatelů v starém roomu
 		io.sockets.emit('updateUsers', usernames, socket.room);	
 		// zpráva do chatu, že došlo k připojení (jen pro uživatele)
-		socket.emit('updateChat', 'SERVER', 'You have connected to '+ newroom);	
+		socket.emit('updateChat', 'SERVER', 'You have connected to '+ newroom, socket.username);	
 		// zpráva všem uživatelům v starém roomu, že se odpojil uživatel
 		socket.broadcast.to(socket.room).emit('updateChat', 'SERVER', socket.username+' has left this room');
 		// uložíme proměnnou

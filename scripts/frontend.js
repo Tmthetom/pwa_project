@@ -85,7 +85,7 @@ socket.on('connect', function () {
 });
 
 // při aktualizaci chatu - zprávy, connect/disconnect, změna roomu
-socket.on('updateChat', function (username, data) {
+socket.on('updateChat', function (username, data, current_user) {
 	var time = new Date();
 	
 	// čas + jméno + zpráva
@@ -93,8 +93,8 @@ socket.on('updateChat', function (username, data) {
 	' - <b>'+ username + ':</b> ' + data + '<br>');
 	
 	// přehrát notifikaci
-	console.log("username: " + username + ", current username: " + socket.decoded_token.name);
-	if(username == socket.decoded_token.name){
+	console.log("username: " + username + ", current username: " + current_user);
+	if(username == current_user){
 		notificationSound();
 	}
 	
