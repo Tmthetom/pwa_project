@@ -32,8 +32,8 @@ $(document).ready(function() {
 			userToken = authResult.idToken;
 			localStorage.setItem('userProfile', profile);
 			userProfile = profile;
-			localStorage.setItem('currentUser', JSON.stringify(profile.name));
-			currentUser = JSON.stringify(profile.name);
+			localStorage.setItem('currentUser', profile.name);
+			currentUser = profile.name);
 
 			// aktualizace stránky
 			location.reload();
@@ -100,7 +100,7 @@ socket.on('updateChat', function (username, data) {
 	console.log("Sender: " + username);
 	console.log("Current user: " + currentUser);
 	
-	if(username == currentUser){
+	if(username != currentUser){
 		notificationSound();
 	}
 	
