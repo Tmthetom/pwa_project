@@ -3,7 +3,7 @@ var room = 'default';
 var lock = null;
 var userToken = localStorage.getItem('userToken');
 var accessToken = localStorage.getItem('accessToken');
-var currentUser;
+var currentUser = "";
 
 // přihlašování uživatele
 $(document).ready(function() {
@@ -25,7 +25,7 @@ $(document).ready(function() {
 				return;        
 			}
 			
-			// sušenky
+			// uložení dat
 			console.log('connected and authenticated');
 			localStorage.setItem('userToken', authResult.idToken);
 			localStorage.setItem('accessToken', authResult.accessToken);
