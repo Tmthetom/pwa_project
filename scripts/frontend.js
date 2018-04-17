@@ -3,7 +3,7 @@ var room = 'default';
 var lock = null;
 var userToken = localStorage.getItem('userToken');
 var accessToken = localStorage.getItem('accessToken');
-var currentUser = "";
+var currentUser = localStorage.getItem('currentUser');
 
 // přihlašování uživatele
 $(document).ready(function() {
@@ -32,9 +32,9 @@ $(document).ready(function() {
 			userToken = authResult.idToken;
 			localStorage.setItem('userProfile', profile);
 			userProfile = profile;
+			localStorage.setItem('currentUser', profile.username);
 			currentUser = profile.username;
-			console.log("Current user in auth: " + profile.username);
-			
+
 			// aktualizace stránky
 			location.reload();
 		});
