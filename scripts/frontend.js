@@ -96,10 +96,6 @@ socket.on('updateChat', function (username, data) {
 	' - <b>'+ username + ':</b> ' + data + '<br>');
 	
 	// přehrát notifikaci
-	
-	console.log("Sender: " + username);
-	console.log("Current user: " + currentUser);
-	
 	if(username != currentUser){
 		notificationSound();
 	}
