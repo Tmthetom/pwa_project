@@ -18,8 +18,7 @@
 ## Online client:
 * https://pwa-moravec.herokuapp.com/
 
-## Screenshot of client:
-![](images/screenshot.PNG "Screenshot of client")
+
 
 ## This is school project originaly located at Gitlab.tul.cz
 * https://gitlab.tul.cz/tomas.moravec/pwa_project
