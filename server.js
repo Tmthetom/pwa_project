@@ -26,7 +26,7 @@ var rooms = [  // List of all rooms
 	'Nature'
 ];
 
-// Server functions
+// Server functions (called only at first time connection)
 io.sockets.on('connection', socketioJwt.authorize({
     secret: 'yeMuI7XLMwwYAhzCtgrGqBLjg9rI5-jpHHs-zCiSfO-O3wFBHHUR12N8z9yCDqvN', // Auth0 secret key
     timeout: 15000  // Connection lifetime

@@ -6,8 +6,10 @@ var userToken = localStorage.getItem('userToken');
 var accessToken = localStorage.getItem('accessToken');
 var currentUser = localStorage.getItem('currentUser');
 
-// First time connection
+// User verification after page loded 
 $(document).ready(function() {
+	
+	// Settings for Auth0
 	var options = {
 		auth: {
 			responseType: 'id_token token',
@@ -15,10 +17,10 @@ $(document).ready(function() {
 		}
 	};
 	
-	// User login (user authentication by Auth0)
+	// Try user login (user authentication by Auth0)
 	lock = new Auth0Lock('qQBp5GOeYQXFu9JXH96wApE20YzGn1yH', 'tmthetom.eu.auth0.com', options);  // Auth0
 	
-	// Connection (when user authenticated by Auth0)
+	// User connected (called only at first time connection)
 	lock.on('authenticated', function(authResult) {
 		lock.getUserInfo(authResult.accessToken, function(error, profile) {
 			
@@ -31,7 +33,6 @@ $(document).ready(function() {
 			// Create session for future connections
 			localStorage.setItem('userToken', authResult.idToken);  // Store user token
 			localStorage.setItem('accessToken', authResult.accessToken);  // Store access token
-			localStorage.setItem('userProfile', profile);  // Store user profile object
 			localStorage.setItem('currentUser', profile.name);  // Store username
 
 			// Reload page for open communication
@@ -50,7 +51,7 @@ $(document).ready(function() {
 	}
 });
 
-// Connection with existing token
+// Connection (everytime page loaded)
 socket.on('connect', function () {
 	
 	// Try to authenticate user
@@ -80,7 +81,6 @@ function logout() {
 	localStorage.removeItem('userToken');  // Remove token
 	localStorage.removeItem('accessToken');  // Remove token
 	location.reload();  // Reload page to close communicator
-	openLockScreen();  // Show lock screen over page
 }
 
 // Set users current room
@@ -151,15 +151,15 @@ function switchRoom(room){
 // Send message (button)
 $(function(){
 	$('#messageSend').click( function() {
-		var message = $('#messageField').val();
-		$('#messageField').val('');
-		socket.emit('sendChat', message);
+		var message = $('#messageField').val();  // Save message
+		$('#messageField').val('');  // Clear field
+		socket.emit('sendChat', message);  // Send message
 	});
 
 	$('#messageField').keypress(function(e) {
 		if(e.which == 13) {
-			$(this).blur();
-			$('#messageSend').focus().click();
+			$(this).blur();  // Unfocus message field
+			$('#messageSend').focus().click();  // Focus on button and click
 		}
 	});
 });
@@ -177,9 +177,9 @@ function updateScroll(){
 
 // Show lock screen layer over page
 function openLockScreen(){
-    var element = document.getElementById("lockForm");
+    var element = document.getElementById("lockForm");  // Show lock form
     element.style.display = "block";
-	var element = document.getElementById("wrapper");
+	var element = document.getElementById("wrapper");  // Blur background
     element.style.filter = "blur(7px)";
 }
 
